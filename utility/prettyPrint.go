@@ -27,10 +27,10 @@ func PrintInfo(infoObject interface{}) {
 }
 
 func PrintStarter() {
-	log.Print("Use the following flags according to your requirements to fully utilize WhoisFreaks' services.")
+	fmt.Println("Use the following flags according to your requirements to fully utilize WhoisFreaks' services.")
 	flag.VisitAll(func(f *flag.Flag) {
-		fmt.Printf("	-%s: %s\n", f.Name, f.Usage)
+		fmt.Printf("	-%s    :    %s\n", f.Name, f.Usage)
 	})
-	log.Print("For Detailed Usage you can consult with README.md.")
+	fmt.Println("For Detailed Usage you can consult with README.md.")
 	os.Exit(0)
 }
