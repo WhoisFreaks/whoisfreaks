@@ -12,12 +12,15 @@ import (
 	"github.com/Usama015/whoisfreaks/utility"
 
 	"github.com/Usama015/whoisfreaks/whois"
+
+	"github.com/Usama015/whoisfreaks/ssl"
 )
 
 func main() {
 	whoisPtr := flag.Bool("whois", false, "for specifying a whois query")
 	dnsPtr := flag.Bool("dns", false, "for specifying a dns query")
 	domainAvailabilityPtr := flag.Bool("domainAvailability", false, "for specifying a domain Availability query")
+	sslPtr := flag.Bool("ssl", false, "for specifying a ssl certificate extraction query")
 
 	livePtr := flag.Bool("live", false, "for specifying a live query of either whois or dns service.")
 	historicalPtr := flag.Bool("historical", false, "for specifying a historical query of either whois or dns service.")
@@ -27,6 +30,8 @@ func main() {
 	bulk := flag.Bool("bulk", false, "for specifying a bulk query of whois service.")
 	sug := flag.Bool("sug", false, "for activating the suggestions.")
 	count := flag.String("count", "", "for specifying the number of suggestions.")
+	chain := flag.Bool("chain", false, "for mention to Extract the chain certificate")
+	raw := flag.Bool("raw", false, "for mention to Extract the raw certificate")
 
 	var domain string
 	flag.StringVar(&domain, "domain", "", "Domain Name for which you need to get whois Information. Only for live and historical whois query.")
@@ -103,7 +108,6 @@ func main() {
 				}
 				utility.PrintInfo(domainInfo)
 			}
-		} else {
 		}
 	} else if *dnsPtr {
 		if *livePtr {
@@ -127,8 +131,6 @@ func main() {
 				return
 			}
 			utility.PrintInfo(reverseDnsInfo)
-		} else {
-
 		}
 	} else if *domainAvailabilityPtr {
 		if *bulk {
@@ -154,6 +156,16 @@ func main() {
 				}
 				utility.PrintInfo(bulkDomainavailabilityInfo)
 			}
+		}
+	} else if *sslPtr {
+		if *livePtr {
+			sslInfo, errorInfo := ssl.GetLiveResponse(domain, apiKey, *chain, *raw)
+			if errorInfo != nil {
+				utility.PrintError(errorInfo)
+				return
+			}
+			utility.PrintInfo(sslInfo)
+
 		}
 	}
 
