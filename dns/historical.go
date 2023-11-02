@@ -4,7 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"whoisfreaks/modal"
+
+	"github.com/Usama015/whoisfreaks/modal"
 )
 
 func GetHistoricalResponse(dnsType, domain, page, apiKey string) (*modal.HistoricalDnsInfo, *modal.Error) {

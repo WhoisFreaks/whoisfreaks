@@ -4,10 +4,14 @@ import (
 	"flag"
 	"os"
 	"strings"
-	"whoisfreaks/dns"
-	domainavailability "whoisfreaks/domainAvailability"
-	"whoisfreaks/utility"
-	"whoisfreaks/whois"
+
+	"github.com/Usama015/whoisfreaks/dns"
+
+	"github.com/Usama015/whoisfreaks/domainavailability"
+
+	"github.com/Usama015/whoisfreaks/utility"
+
+	"github.com/Usama015/whoisfreaks/whois"
 )
 
 func main() {

@@ -4,7 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"whoisfreaks/modal"
+
+	"github.com/Usama015/whoisfreaks/modal"
 )
 
 func GetReverseResponse(dnsType, value, page, apiKey string) (*modal.ReverseDnsInfo, *modal.Error) {

@@ -4,7 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"whoisfreaks/modal"
+
+	"github.com/Usama015/whoisfreaks/modal"
 )
 
 func GetReverseMiniResponse(keyword, email, company, owner, apiKey, page string) (*modal.ReverseMiniDomainInfo, *modal.Error) {
