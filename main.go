@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 	"strings"
 
@@ -43,6 +44,13 @@ func main() {
 	page := flag.String("page", "", "Required Page Number. Each page contains 100 records.")
 
 	flag.Parse()
+
+	if flag.NFlag() == 0 {
+		flag.VisitAll(func(f *flag.Flag) {
+			fmt.Printf("-%s: %s\n", f.Name, f.Usage)
+		})
+		os.Exit(0)
+	}
 
 	validated, apiKey := utility.DoParameterValidation(*whoisPtr, *dnsPtr, *domainAvailabilityPtr, *sslPtr, *livePtr, *historicalPtr, *reversePtr)
 	if !validated {
