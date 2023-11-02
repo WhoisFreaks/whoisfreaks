@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"os"
 	"strings"
 
@@ -18,38 +17,35 @@ import (
 )
 
 func main() {
-	whoisPtr := flag.Bool("whois", false, "for specifying a whois query")
-	dnsPtr := flag.Bool("dns", false, "for specifying a dns query")
-	domainAvailabilityPtr := flag.Bool("domainAvailability", false, "for specifying a domain Availability query")
-	sslPtr := flag.Bool("ssl", false, "for specifying a ssl certificate extraction query")
+	whoisPtr := flag.Bool("whois", false, "For specifying a whois query. With this flag you must choose a flag from -live -historical -reverse")
+	dnsPtr := flag.Bool("dns", false, "For specifying a dns query. With this flag you must choose a flag from -live -historical -reverse")
+	domainAvailabilityPtr := flag.Bool("domainAvailability", false, "For specifying a domain Availability query. With this flag you can also choose the bulk query by mentioning -bulk.")
+	sslPtr := flag.Bool("ssl", false, "For specifying a ssl certificate extraction query. With this flag you can choose -live for performing a live query.")
 
-	livePtr := flag.Bool("live", false, "for specifying a live query of either whois or dns service.")
-	historicalPtr := flag.Bool("historical", false, "for specifying a historical query of either whois or dns service.")
-	reversePtr := flag.Bool("reverse", false, "for specifying a reverse query of either whois or dns service.")
+	livePtr := flag.Bool("live", false, "For specifying a live query.")
+	historicalPtr := flag.Bool("historical", false, "For specifying a historical query.")
+	reversePtr := flag.Bool("reverse", false, "For specifying a reverse query.")
 
-	mini := flag.Bool("mini", false, "used for returning mini whois Responses that contains fewer fields. It is only useful with reverse whois query.")
-	bulk := flag.Bool("bulk", false, "for specifying a bulk query of whois service.")
-	sug := flag.Bool("sug", false, "for activating the suggestions.")
-	chain := flag.Bool("chain", false, "for mention to Extract the chain certificate")
-	raw := flag.Bool("raw", false, "for mention to Extract the raw certificate")
-	count := flag.String("count", "", "for specifying the number of suggestions.")
-	domain := flag.String("domain", "", "Domain Name for which you need to get whois Information. Only for live and historical whois query.")
-	domains := flag.String("domains", "", "Domain Names for bulk query. Only for live Whois and Domain Availability query.")
-	company_name := flag.String("company", "", "Company Name for which you need to get whois Information. only with reverse whois query.")
-	keyword := flag.String("keyword", "", "Keyword for which you need to get whois Information. only with reverse whois query.")
-	owner_name := flag.String("owner", "", "Owner Name for which you need to get whois Information. only with reverse whois query.")
-	email := flag.String("email", "", "Email for which you need to get whois Information. only with reverse whois query.")
-	dnsType := flag.String("dnsType", "", "Dns Record type for which you need to get DNS Information. use 'all' for retrieving all types of records.")
-	value := flag.String("value", "", "Value of record type for which you need to get DNS Information. e.g. 8.8.8.8 for ARecord")
-	page := flag.String("page", "", "Required Page Number. Each page contains 100 records.")
+	mini := flag.Bool("mini", false, "Used for getting mini whois Responses that contains fewer fields. It is only useful with -whois -reverse.")
+	bulk := flag.Bool("bulk", false, "For specifying a bulk query. With this flag you can use -domains and pass multiple domains with comma Separated policy.")
+	sug := flag.Bool("sug", false, "For activating the suggestions during performing domain Availability query")
+	chain := flag.Bool("chain", false, "For specifying chain certificate extraction. This flag is compatible with -ssl -live.")
+	raw := flag.Bool("raw", false, "For specifying raw certificate extraction. This flag is compatible with -ssl -live.")
+	count := flag.String("count", "", "for specifying the number of suggestions, useful with historical query when suggestions are activated.")
+	domain := flag.String("domain", "", "Domain Name for which you need to get whois Information. Only for live and historical query.")
+	domains := flag.String("domains", "", "Domain Names for bulk query. Only for live Whois and Domain Availability query. Must be used with -bulk flag.")
+	company_name := flag.String("company", "", "Company Name for which you need to get whois Information. Only with reverse whois query.")
+	keyword := flag.String("keyword", "", "Keyword for which you need to get whois Information. Only with reverse whois query.")
+	owner_name := flag.String("owner", "", "Owner Name for which you need to get whois Information. Only with reverse whois query.")
+	email := flag.String("email", "", "Email for which you need to get whois Information. Only with reverse whois query.")
+	dnsType := flag.String("dnsType", "", "Dns Record type for which you need to get DNS Information. use 'all' for retrieving all types of records. Must be used with dns query of any type.")
+	value := flag.String("value", "", "Value of record type for which you need to get DNS Information. e.g. 8.8.8.8 for ARecord. Must be used with reverse dns query.")
+	page := flag.String("page", "", "Required Page Number. Each page contains 100 records. Useful with reverse and historical queries when there are a lot of records.")
 
 	flag.Parse()
 
 	if flag.NFlag() == 0 {
-		flag.VisitAll(func(f *flag.Flag) {
-			fmt.Printf("-%s: %s\n", f.Name, f.Usage)
-		})
-		os.Exit(0)
+		utility.PrintStarter()
 	}
 
 	validated, apiKey := utility.DoParameterValidation(*whoisPtr, *dnsPtr, *domainAvailabilityPtr, *sslPtr, *livePtr, *historicalPtr, *reversePtr)
@@ -130,22 +126,20 @@ func main() {
 				return
 			}
 			utility.PrintInfo(bulkDomainavailabilityInfo)
-		} else {
-			if *sug {
-				domainavailabilityInfo, errorInfo := domainavailability.CheckAndSuggest(*domain, apiKey, *sug, *count)
-				if errorInfo != nil {
-					utility.PrintError(errorInfo)
-					return
-				}
-				utility.PrintInfo(domainavailabilityInfo)
-			} else {
-				bulkDomainavailabilityInfo, errorInfo := domainavailability.Check(*domain, apiKey)
-				if errorInfo != nil {
-					utility.PrintError(errorInfo)
-					return
-				}
-				utility.PrintInfo(bulkDomainavailabilityInfo)
+		} else if *sug {
+			domainavailabilityInfo, errorInfo := domainavailability.CheckAndSuggest(*domain, apiKey, *sug, *count)
+			if errorInfo != nil {
+				utility.PrintError(errorInfo)
+				return
 			}
+			utility.PrintInfo(domainavailabilityInfo)
+		} else {
+			bulkDomainavailabilityInfo, errorInfo := domainavailability.Check(*domain, apiKey)
+			if errorInfo != nil {
+				utility.PrintError(errorInfo)
+				return
+			}
+			utility.PrintInfo(bulkDomainavailabilityInfo)
 		}
 	} else if *sslPtr {
 		if *livePtr {

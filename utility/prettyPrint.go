@@ -2,7 +2,9 @@ package utility
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
+	"os"
 )
 
 func PrintError(errorInfo interface{}) {
@@ -21,4 +23,11 @@ func PrintInfo(infoObject interface{}) {
 		return
 	}
 	fmt.Println(string(infoJSON))
+}
+
+func PrintStarter() {
+	flag.VisitAll(func(f *flag.Flag) {
+		fmt.Printf("-%s: %s\n", f.Name, f.Usage)
+	})
+	os.Exit(0)
 }
