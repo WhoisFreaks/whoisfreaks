@@ -44,7 +44,7 @@ func main() {
 
 	flag.Parse()
 
-	validated, apiKey := utility.DoParameterValidation(*whoisPtr, *dnsPtr, *domainAvailabilityPtr, *livePtr, *historicalPtr, *reversePtr, *sslPtr)
+	validated, apiKey := utility.DoParameterValidation(*whoisPtr, *dnsPtr, *domainAvailabilityPtr, *sslPtr, *livePtr, *historicalPtr, *reversePtr)
 	if !validated {
 		os.Exit(1)
 	}
