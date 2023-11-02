@@ -1,7 +1,6 @@
 package utility
 
 import (
-	"fmt"
 	"log"
 	"os"
 )
@@ -13,22 +12,27 @@ func DoParameterValidation(whois, dns, domainavailability, ssl, live, historical
 	}
 
 	if !(whois) && !(dns) && !(domainavailability) && !(ssl) {
-		fmt.Println("Error: Either -whois, -dns, -domainavailability, -ssl flag must be specified and set to true.")
+		log.Fatal("You must use one of the following as per your need;\n" +
+			"    -whois to perform a Whois Lookup.\n    -dns to perform a DNS lookup.\n    -domainavailability to perform a Domain Availability lookup.\n" +
+			"    -ssl to perform a SSL Lookup")
 		return false, apikey
 	}
 
 	if whois && !(live || historical || reverse) {
-		fmt.Println("Error: For whois query, specify at least one of -live, -historical, or -reverse and set it to true.")
+		log.Fatal("For whois query, specify at least one of the following;\n" +
+			"    -live to perform live query. \n    -historical to perform historical query.\n    -reverse to perform a reverse query.")
 		return false, apikey
 	}
 
 	if dns && !(live || historical || reverse) {
-		fmt.Println("Error: For dns query, specify at least one of -live, -historical, or -reverse and set it to true.")
+		log.Fatal("For dns query, specify at least one of the following;\n" +
+			"    -live to perform live query. \n    -historical to perform historical query.\n    -reverse to perform a reverse query.")
 		return false, apikey
 	}
 
 	if ssl && !live {
-		fmt.Println("Error: For ssl query, use -live to mention live query")
+		log.Fatal("For ssl query, specify following:\n" +
+			"    -live to perform live query")
 		return false, apikey
 	}
 	return true, apikey
