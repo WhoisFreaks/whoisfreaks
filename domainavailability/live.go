@@ -1,4 +1,4 @@
-// This package is for performing any type of DNS lookup, such as live, historical, or reverse lookups.
+// This package is for performing any type of Domain Availability lookup.
 
 package domainavailability
 
