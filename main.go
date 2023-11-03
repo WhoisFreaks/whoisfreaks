@@ -57,50 +57,50 @@ func main() {
 			if *bulk {
 				domainInfo, errorInfo := whois.GetBulkLiveResponse(strings.Split(*domains, ","), apiKey)
 				if errorInfo != nil {
-					PrintError(errorInfo)
+					printError(errorInfo)
 					return
 				}
-				PrintInfo(domainInfo)
+				printInfo(domainInfo)
 			} else {
 				domainInfo, errorInfo := whois.GetLiveResponse(*domain, apiKey)
 				if errorInfo != nil {
-					PrintError(errorInfo)
+					printError(errorInfo)
 					return
 				}
-				PrintInfo(domainInfo)
+				printInfo(domainInfo)
 			}
 		} else if *historicalPtr {
 			domainInfo, errorInfo := whois.GetHistoricalResponse(*domain, apiKey)
 			if errorInfo != nil {
-				PrintError(errorInfo)
+				printError(errorInfo)
 				return
 			}
-			PrintInfo(domainInfo)
+			printInfo(domainInfo)
 		} else if *reversePtr {
 			if *mini {
 				domainInfo, errorInfo := whois.GetReverseMiniResponse(*keyword, *email, *company_name, *owner_name, apiKey, *page)
 				if errorInfo != nil {
-					PrintError(errorInfo)
+					printError(errorInfo)
 					return
 				}
-				PrintInfo(domainInfo)
+				printInfo(domainInfo)
 			} else {
 				domainInfo, errorInfo := whois.GetReverseResponse(*keyword, *email, *company_name, *owner_name, apiKey, *page)
 				if errorInfo != nil {
-					PrintError(errorInfo)
+					printError(errorInfo)
 					return
 				}
-				PrintInfo(domainInfo)
+				printInfo(domainInfo)
 			}
 		}
 	} else if *dnsPtr {
 		if *livePtr {
 			dnsInfo, errorInfo := dns.GetLiveResponse(*dnsType, *domain, apiKey)
 			if errorInfo != nil {
-				PrintError(errorInfo)
+				printError(errorInfo)
 				return
 			}
-			PrintInfo(dnsInfo)
+			printInfo(dnsInfo)
 		} else if *historicalPtr {
 			historicalDnsInfo, errorInfo := dns.GetHistoricalResponse(*dnsType, *domain, *page, apiKey)
 			if errorInfo != nil {
