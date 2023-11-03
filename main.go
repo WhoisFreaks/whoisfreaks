@@ -44,6 +44,10 @@ func main() {
 
 	flag.Parse()
 
+	if flag.CommandLine.NArg() > 0{
+		utility.PrintUnknownFlags()
+	}
+	
 	if flag.NFlag() == 0 {
 		utility.PrintStarter()
 	}
