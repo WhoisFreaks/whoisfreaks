@@ -38,7 +38,7 @@ With whoisfreaks's Whois tool you can perform;
 For live whois lookup you can use;
 
 ```
-$ whoisfreaks -whois -live -domain whoisfreaks.com
+whoisfreaks -whois -live -domain whoisfreaks.com
 ```
 
 to perform bulk live lookup you can use following code where you will provide multiple domains that are comma separated.
@@ -52,32 +52,32 @@ Note: Maximum 100 domains will be served if you want to perform bulk lookup with
 For historical whois lookup you can use;
 
 ```
-$ whoisfreaks -whois -historical -domain whoisfreaks.com
+whoisfreaks -whois -historical -domain whoisfreaks.com
 ```
 
 ##### Reverse whois Lookup
 For reverse whois lookup based on keyword you can use;
 
 ```
-$ whoisfreaks -whois -reverse -keyword whoisfreaks
+whoisfreaks -whois -reverse -keyword whoisfreaks
 ```
 
 For reverse whois lookup based on owner name you can use;
 
 ```
-$ whoisfreaks -whois -reverse -owner ejaz_ahmed
+whoisfreaks -whois -reverse -owner ejaz_ahmed
 ```
 
 For reverse whois lookup based on company name you can use;
 
 ```
-$ whoisfreaks -whois -reverse -company jfreak
+whoisfreaks -whois -reverse -company jfreak
 ```
 
 For reverse whois lookup based on email you can use;
 
 ```
-$ whoisfreaks -whois -reverse -email ejaz_ahmed@outlook.com
+whoisfreaks -whois -reverse -email ejaz_ahmed@outlook.com
 ```
 
 with any of the above reverse queries you can use some additional flags like;
@@ -111,7 +111,7 @@ With whoisfreaks's DNS tool you can perform;
 For live DNS lookup you can use following;
 
 ```
-$ whoisfreaks -dns -live -domain whoisfreaks.com -dnsType all
+whoisfreaks -dns -live -domain whoisfreaks.com -dnsType all
 ```
 * use ``-dnsType a`` for A records, if you want any other record use name of that record. If you want multiple use a comma separated list like `` -dnsType a,mx,ns``
 
@@ -119,7 +119,7 @@ $ whoisfreaks -dns -live -domain whoisfreaks.com -dnsType all
 For historical DNS lookup you can use;
 
 ```
-$ whoisfreaks -dns -historical -domain whoisfreaks.com -dnsType all
+whoisfreaks -dns -historical -domain whoisfreaks.com -dnsType all
 ```
 * use ``-dnsType a`` for A records, if you want any other record use name of that record. If you want multiple use a comma separated list like ``-dnsType a,mx,ns``
   
@@ -127,7 +127,7 @@ $ whoisfreaks -dns -historical -domain whoisfreaks.com -dnsType all
 For reverse DNS lookup based on specific dns Record you can use;
 
 ```
-$ whoisfreaks -dns -reverse -value 8.8.8.8 -dnsType a
+whoisfreaks -dns -reverse -value 8.8.8.8 -dnsType a
 ```
 
 * ``-page n`` to get control over pages if there are more then 100 records as each page contains 100 records. By default you will get first page.
