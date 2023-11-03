@@ -8,6 +8,27 @@ import (
 	"github.com/WhoisFreaks/whoisfreaks/modal"
 )
 
+// GetReverseMiniResponse performs a reverse whois lookup in mini mode using the WhoisFreaks API.
+//
+// Parameters:
+//   - keyword: The keyword to search for in domain records.
+//   - email: The email address to search for in domain records.
+//   - company: The company name to search for in domain records.
+//   - owner: The owner name to search for in domain records.
+//   - apiKey: The API key for authenticating the request with the WhoisFreaks API.
+//   - page: The optional page number for paginated results. Leave empty for the first page.
+//
+// Returns:
+//   - *modal.ReverseMiniDomainInfo: A pointer to a ReverseMiniDomainInfo struct containing reverse whois information in mini mode.
+//   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
+//
+// Example usage:
+//   reverseMiniDomainInfo, err := whois.GetReverseMiniResponse("example", "email@example.com", "", "", "your_api_key", "1")
+//   if err != nil {
+//       fmt.Println("Error:", err)
+//       return
+//   }
+//   fmt.Println("Reverse Mini Domain Info:", reverseMiniDomainInfo)
 func GetReverseMiniResponse(keyword, email, company, owner, apiKey, page string) (*modal.ReverseMiniDomainInfo, *modal.Error) {
 
 	var reverseWhoisURL = "https://api.whoisfreaks.com/v1.0/whois?apiKey=" + apiKey + "&whois=reverse&mode=mini"
@@ -52,6 +73,27 @@ func GetReverseMiniResponse(keyword, email, company, owner, apiKey, page string)
 	return &reverseMiniDomainInfo, nil
 }
 
+// GetReverseResponse performs a reverse whois lookup using the WhoisFreaks API.
+//
+// Parameters:
+//   - keyword: The keyword to search for in domain records.
+//   - email: The email address to search for in domain records.
+//   - company: The company name to search for in domain records.
+//   - owner: The owner name to search for in domain records.
+//   - apiKey: The API key for authenticating the request with the WhoisFreaks API.
+//   - page: The optional page number for paginated results. Leave empty for the first page.
+//
+// Returns:
+//   - *modal.ReverseDomainInfo: A pointer to a ReverseDomainInfo struct containing reverse whois information.
+//   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
+//
+// Example usage:
+//   reverseDomainInfo, err := whois.GetReverseResponse("example", "email@example.com", "", "", "your_api_key", "1")
+//   if err != nil {
+//       fmt.Println("Error:", err)
+//       return
+//   }
+//   fmt.Println("Reverse Domain Info:", reverseDomainInfo)
 func GetReverseResponse(keyword, email, company, owner, apiKey, page string) (*modal.ReverseDomainInfo, *modal.Error) {
 
 	var reverseWhoisURL = "https://api.whoisfreaks.com/v1.0/whois?apiKey=" + apiKey + "&whois=reverse"

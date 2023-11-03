@@ -1,3 +1,4 @@
+// This package is for performing any type of DNS lookup, such as live, historical, or reverse lookups.
 package dns
 
 import (
@@ -8,6 +9,26 @@ import (
 	"github.com/WhoisFreaks/whoisfreaks/modal"
 )
 
+// GetHistoricalResponse performs a historical DNS lookup using the WhoisFreaks API.
+// It retrieves historical DNS information for a specific domain and DNS type.
+//
+// Parameters:
+//   - dnsType: The type of DNS record to look up (e.g., "A", "MX", "CNAME").
+//   - domain: The domain name for which historical DNS information is requested.
+//   - page: The optional page number for paginated results. Leave empty for the first page.
+//   - apiKey: The API key for authenticating the request with the WhoisFreaks API.
+//
+// Returns:
+//   - *modal.HistoricalDnsInfo: A pointer to a HistoricalDnsInfo struct containing historical DNS information.
+//   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
+//
+// Example usage:
+//   historicalDnsInfo, err := dns.GetHistoricalResponse("A", "example.com", "1", "your_api_key")
+//   if err != nil {
+//       fmt.Println("Error:", err)
+//       return
+//   }
+//   fmt.Println("Historical DNS Info:", historicalDnsInfo)
 func GetHistoricalResponse(dnsType, domain, page, apiKey string) (*modal.HistoricalDnsInfo, *modal.Error) {
 
 	var historicalDNSURL = "https://api.whoisfreaks.com/v1.0/dns/historical?apiKey=" + apiKey + "&type=" + dnsType + "&domainName=" + domain
