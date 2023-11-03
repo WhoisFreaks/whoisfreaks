@@ -9,8 +9,6 @@ import (
 
 	"github.com/WhoisFreaks/whoisfreaks/domainavailability"
 
-	"github.com/WhoisFreaks/whoisfreaks/utility"
-
 	"github.com/WhoisFreaks/whoisfreaks/whois"
 
 	"github.com/WhoisFreaks/whoisfreaks/ssl"
@@ -45,10 +43,10 @@ func main() {
 	flag.Parse()
 
 	if flag.NFlag() == 0 {
-		utility.PrintStarter()
+		printStarter()
 	}
 
-	validated, apiKey := utility.DoParameterValidation(*whoisPtr, *dnsPtr, *domainAvailabilityPtr, *sslPtr, *livePtr, *historicalPtr, *reversePtr)
+	validated, apiKey := doParameterValidation(*whoisPtr, *dnsPtr, *domainAvailabilityPtr, *sslPtr, *livePtr, *historicalPtr, *reversePtr)
 	if !validated {
 		os.Exit(1)
 	}
@@ -59,98 +57,161 @@ func main() {
 			if *bulk {
 				domainInfo, errorInfo := whois.GetBulkLiveResponse(strings.Split(*domains, ","), apiKey)
 				if errorInfo != nil {
-					utility.PrintError(errorInfo)
+					PrintError(errorInfo)
 					return
 				}
-				utility.PrintInfo(domainInfo)
+				PrintInfo(domainInfo)
 			} else {
 				domainInfo, errorInfo := whois.GetLiveResponse(*domain, apiKey)
 				if errorInfo != nil {
-					utility.PrintError(errorInfo)
+					PrintError(errorInfo)
 					return
 				}
-				utility.PrintInfo(domainInfo)
+				PrintInfo(domainInfo)
 			}
 		} else if *historicalPtr {
 			domainInfo, errorInfo := whois.GetHistoricalResponse(*domain, apiKey)
 			if errorInfo != nil {
-				utility.PrintError(errorInfo)
+				PrintError(errorInfo)
 				return
 			}
-			utility.PrintInfo(domainInfo)
+			PrintInfo(domainInfo)
 		} else if *reversePtr {
 			if *mini {
 				domainInfo, errorInfo := whois.GetReverseMiniResponse(*keyword, *email, *company_name, *owner_name, apiKey, *page)
 				if errorInfo != nil {
-					utility.PrintError(errorInfo)
+					PrintError(errorInfo)
 					return
 				}
-				utility.PrintInfo(domainInfo)
+				PrintInfo(domainInfo)
 			} else {
 				domainInfo, errorInfo := whois.GetReverseResponse(*keyword, *email, *company_name, *owner_name, apiKey, *page)
 				if errorInfo != nil {
-					utility.PrintError(errorInfo)
+					PrintError(errorInfo)
 					return
 				}
-				utility.PrintInfo(domainInfo)
+				PrintInfo(domainInfo)
 			}
 		}
 	} else if *dnsPtr {
 		if *livePtr {
 			dnsInfo, errorInfo := dns.GetLiveResponse(*dnsType, *domain, apiKey)
 			if errorInfo != nil {
-				utility.PrintError(errorInfo)
+				PrintError(errorInfo)
 				return
 			}
-			utility.PrintInfo(dnsInfo)
+			PrintInfo(dnsInfo)
 		} else if *historicalPtr {
 			historicalDnsInfo, errorInfo := dns.GetHistoricalResponse(*dnsType, *domain, *page, apiKey)
 			if errorInfo != nil {
-				utility.PrintError(errorInfo)
+				printError(errorInfo)
 				return
 			}
-			utility.PrintInfo(historicalDnsInfo)
+			printInfo(historicalDnsInfo)
 		} else if *reversePtr {
 			reverseDnsInfo, errorInfo := dns.GetReverseResponse(*dnsType, *value, *page, apiKey)
 			if errorInfo != nil {
-				utility.PrintError(errorInfo)
+				printError(errorInfo)
 				return
 			}
-			utility.PrintInfo(reverseDnsInfo)
+			printInfo(reverseDnsInfo)
 		}
 	} else if *domainAvailabilityPtr {
 		if *bulk {
 			bulkDomainavailabilityInfo, errorInfo := domainavailability.Bulk(strings.Split(*domains, ","), apiKey)
 			if errorInfo != nil {
-				utility.PrintError(errorInfo)
+				printError(errorInfo)
 				return
 			}
-			utility.PrintInfo(bulkDomainavailabilityInfo)
+			printInfo(bulkDomainavailabilityInfo)
 		} else if *sug {
 			domainavailabilityInfo, errorInfo := domainavailability.CheckAndSuggest(*domain, apiKey, *sug, *count)
 			if errorInfo != nil {
-				utility.PrintError(errorInfo)
+				printError(errorInfo)
 				return
 			}
-			utility.PrintInfo(domainavailabilityInfo)
+			printInfo(domainavailabilityInfo)
 		} else {
 			bulkDomainavailabilityInfo, errorInfo := domainavailability.Check(*domain, apiKey)
 			if errorInfo != nil {
-				utility.PrintError(errorInfo)
+				printError(errorInfo)
 				return
 			}
-			utility.PrintInfo(bulkDomainavailabilityInfo)
+			printInfo(bulkDomainavailabilityInfo)
 		}
 	} else if *sslPtr {
 		if *livePtr {
 			sslInfo, errorInfo := ssl.GetLiveResponse(*domain, apiKey, *chain, *raw)
 			if errorInfo != nil {
-				utility.PrintError(errorInfo)
+				printError(errorInfo)
 				return
 			}
-			utility.PrintInfo(sslInfo)
+			printInfo(sslInfo)
 
 		}
 	}
 
+}
+
+func doParameterValidation(whois, dns, domainavailability, ssl, live, historical, reverse bool) (bool, string) {
+	apikey, present := os.LookupEnv("WHOISFREAKS_API_KEY")
+	if present != true {
+		log.Fatal("Are you sure you've set 'WHOISFREAKS_API_KEY' environmental variable? Because it's current value is: " + apikey)
+	}
+
+	if !(whois) && !(dns) && !(domainavailability) && !(ssl) {
+		fmt.Println("You must use one of the following as per your need;\n" +
+			"    -whois to perform a Whois Lookup.\n    -dns to perform a DNS lookup.\n    -domainavailability to perform a Domain Availability lookup.\n" +
+			"    -ssl to perform a SSL Lookup")
+		return false, apikey
+	}
+
+	if whois && !(live || historical || reverse) {
+		fmt.Println("For whois query, specify at least one of the following;\n" +
+			"    -live to perform live query. \n    -historical to perform historical query.\n    -reverse to perform a reverse query.")
+		return false, apikey
+	}
+
+	if dns && !(live || historical || reverse) {
+		fmt.Println("For dns query, specify at least one of the following;\n" +
+			"    -live to perform live query. \n    -historical to perform historical query.\n    -reverse to perform a reverse query.")
+		return false, apikey
+	}
+
+	if ssl && !live {
+		fmt.Println("For ssl query, specify following:\n" +
+			"    -live to perform live query")
+		return false, apikey
+	}
+	return true, apikey
+}
+
+
+func printError(errorInfo interface{}) {
+	errorJSON, err := json.MarshalIndent(errorInfo, "", "    ")
+	if err != nil {
+		log.Fatal("Error while Marshaling the Error Object:", err)
+		return
+	}
+	fmt.Println(string(errorJSON))
+}
+
+func printInfo(infoObject interface{}) {
+	infoJSON, err := json.MarshalIndent(infoObject, "", "    ")
+	if err != nil {
+		log.Fatal("Error while Marshaling the Object:", err)
+		return
+	}
+	fmt.Println(string(infoJSON))
+}
+
+func printStarter() {
+	fmt.Println("Use the following flags according to your requirements to fully utilize WhoisFreaks' services.")
+	fmt.Println()
+	flag.VisitAll(func(f *flag.Flag) {
+		fmt.Printf("	-%s    :    %s\n", f.Name, f.Usage)
+	})
+	fmt.Println()
+	fmt.Println("For Detailed Usage you can consult with README.md.")
+	os.Exit(0)
 }
