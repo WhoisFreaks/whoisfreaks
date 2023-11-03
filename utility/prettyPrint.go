@@ -36,10 +36,3 @@ func PrintStarter() {
 	fmt.Println("For Detailed Usage you can consult with README.md.")
 	os.Exit(0)
 }
-
-func PrintUnknownFlags(){
-	unknownFlag := flag.CommandLine.Args()[0]
-	fmt.Println("Unknown flag: %s", unknownFlag)
-	fmt.Println("use 'whoisfreaks' this command to go through all available flags.")
-	os.Exit(0)
-}
