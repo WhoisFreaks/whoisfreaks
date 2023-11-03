@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Usama015/whoisfreaks/modal"
+	"github.com/WhoisFreaks/whoisfreaks/modal"
 )
 
 func GetHistoricalResponse(domain, apiKey string) (*modal.HistoricalDomainInfo, *modal.Error) {

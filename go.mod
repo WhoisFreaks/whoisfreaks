@@ -1,3 +1,3 @@
-module github.com/Usama015/whoisfreaks
+module github.com/WhoisFreaks/whoisfreaks
 
 go 1.18

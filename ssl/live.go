@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Usama015/whoisfreaks/modal"
+	"github.com/WhoisFreaks/whoisfreaks/modal"
 )
 
 func GetLiveResponse(domain string, apiKey string, chain bool, raw bool) (*modal.DomainSslInfo, *modal.Error) {

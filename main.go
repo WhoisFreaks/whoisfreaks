@@ -5,15 +5,15 @@ import (
 	"os"
 	"strings"
 
-	"github.com/Usama015/whoisfreaks/dns"
+	"github.com/WhoisFreaks/whoisfreaks/dns"
 
-	"github.com/Usama015/whoisfreaks/domainavailability"
+	"github.com/WhoisFreaks/whoisfreaks/domainavailability"
 
-	"github.com/Usama015/whoisfreaks/utility"
+	"github.com/WhoisFreaks/whoisfreaks/utility"
 
-	"github.com/Usama015/whoisfreaks/whois"
+	"github.com/WhoisFreaks/whoisfreaks/whois"
 
-	"github.com/Usama015/whoisfreaks/ssl"
+	"github.com/WhoisFreaks/whoisfreaks/ssl"
 )
 
 func main() {

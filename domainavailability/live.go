@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Usama015/whoisfreaks/modal"
+	"github.com/WhoisFreaks/whoisfreaks/modal"
 )
 
 func Check(domain, apiKey string) (*modal.DomainAvailability, *modal.Error) {

@@ -4,16 +4,16 @@ A tool in Go Lang to utilize [Whoisfreaks](https://whoisfreaks.com/)' services l
 For Installation go must be installed in your machine;
 
 ```
-go get -u github.com/Usama015/whoisfreaks
+go get -u github.com/WhoisFreaks/whoisfreaks
 ```
 OR
 ```
-go install github.com/Usama015/whoisfreaks
+go install github.com/WhoisFreaks/whoisfreaks
 ```
 
 if above commands are causing issues you can also use following way;
 ```
-git clone https://github.com/Usama015/whoisfreaks.git
+git clone https://github.com/WhoisFreaks/whoisfreaks.git
 ```
 go to the cloned directory and build the project using;
 ```
