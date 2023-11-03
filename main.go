@@ -4,6 +4,9 @@ import (
 	"flag"
 	"os"
 	"strings"
+	"log"
+	"fmt"
+	"encoding/json"
 
 	"github.com/WhoisFreaks/whoisfreaks/dns"
 
