@@ -10,8 +10,8 @@ OR
 ```
 go install github.com/WhoisFreaks/whoisfreaks
 ```
-
-if above commands are causing issues you can also use following way;
+##### using source code
+if you want to build on your own you can follow this;
 ```
 git clone https://github.com/WhoisFreaks/whoisfreaks.git
 ```
