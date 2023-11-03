@@ -21,7 +21,7 @@ import (
 //   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
 //
 // Example usage:
-//   dnsInfo, err := GetLiveResponse("A", "example.com", "your_api_key")
+//   dnsInfo, err := dns.GetLiveResponse("a", "example.com", "your_api_key")
 //   if err != nil {
 //       fmt.Println("Error:", err)
 //       return

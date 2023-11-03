@@ -1,12 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
+	"fmt"
+	"log"
 	"os"
 	"strings"
-	"log"
-	"fmt"
-	"encoding/json"
 
 	"github.com/WhoisFreaks/whoisfreaks/dns"
 
@@ -188,7 +188,6 @@ func doParameterValidation(whois, dns, domainavailability, ssl, live, historical
 	}
 	return true, apikey
 }
-
 
 func printError(errorInfo interface{}) {
 	errorJSON, err := json.MarshalIndent(errorInfo, "", "    ")

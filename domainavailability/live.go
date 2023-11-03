@@ -1,5 +1,4 @@
 // This package is for performing any type of Domain Availability lookup.
-
 package domainavailability
 
 import (

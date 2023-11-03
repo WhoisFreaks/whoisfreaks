@@ -1,5 +1,4 @@
 // This package is for performing any type of WHOIS lookup, such as live, historical, or reverse lookups.
-
 package whois
 
 import (
