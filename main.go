@@ -1,12 +1,33 @@
+/*
+Package whoisfreaks provides a client for using the Whoisfreaks APIs.
+
+Usage:
+
+	import "github.com/WhoisFreaks/whoisfreaks/whois"
+	import "github.com/WhoisFreaks/whoisfreaks/dns"
+	import "github.com/WhoisFreaks/whoisfreaks/ssl"
+	import "github.com/WhoisFreaks/whoisfreaks/domainavailability"
+
+Authorization
+
+To perform authorized API calls, pass your apiKey to SetAPIKey method of the respective package.
+For example:
+	whois.SetAPIKey("your_api_key")
+	dns.SetAPIKey("your_api_key")
+	ssl.SetAPIKey("your_api_key")
+	domainavailability.SetAPIKey("your_api_key")
+
+For more detailed usage of whois, dns, ssl and domainavailability modules go through their documentation in Directories section.
+*/
 package main
 
 import (
+	"encoding/json"
 	"flag"
+	"fmt"
+	"log"
 	"os"
 	"strings"
-	"log"
-	"fmt"
-	"encoding/json"
 
 	"github.com/WhoisFreaks/whoisfreaks/dns"
 
@@ -49,23 +70,24 @@ func main() {
 		printStarter()
 	}
 
-	validated, apiKey := doParameterValidation(*whoisPtr, *dnsPtr, *domainAvailabilityPtr, *sslPtr, *livePtr, *historicalPtr, *reversePtr)
+	validated, apiKey := doFlagsValidation(*whoisPtr, *dnsPtr, *domainAvailabilityPtr, *sslPtr, *livePtr, *historicalPtr, *reversePtr)
 	if !validated {
 		os.Exit(1)
 	}
 
 	// For Sending Query to the requested servers.
 	if *whoisPtr {
+		whois.SetAPIKey(apiKey)
 		if *livePtr {
 			if *bulk {
-				domainInfo, errorInfo := whois.GetBulkLiveResponse(strings.Split(*domains, ","), apiKey)
+				domainInfo, errorInfo := whois.GetBulkLiveResponse(strings.Split(*domains, ","))
 				if errorInfo != nil {
 					printError(errorInfo)
 					return
 				}
 				printInfo(domainInfo)
 			} else {
-				domainInfo, errorInfo := whois.GetLiveResponse(*domain, apiKey)
+				domainInfo, errorInfo := whois.GetLiveResponse(*domain)
 				if errorInfo != nil {
 					printError(errorInfo)
 					return
@@ -73,7 +95,7 @@ func main() {
 				printInfo(domainInfo)
 			}
 		} else if *historicalPtr {
-			domainInfo, errorInfo := whois.GetHistoricalResponse(*domain, apiKey)
+			domainInfo, errorInfo := whois.GetHistoricalResponse(*domain)
 			if errorInfo != nil {
 				printError(errorInfo)
 				return
@@ -81,14 +103,14 @@ func main() {
 			printInfo(domainInfo)
 		} else if *reversePtr {
 			if *mini {
-				domainInfo, errorInfo := whois.GetReverseMiniResponse(*keyword, *email, *company_name, *owner_name, apiKey, *page)
+				domainInfo, errorInfo := whois.GetReverseMiniResponse(*keyword, *email, *company_name, *owner_name, *page)
 				if errorInfo != nil {
 					printError(errorInfo)
 					return
 				}
 				printInfo(domainInfo)
 			} else {
-				domainInfo, errorInfo := whois.GetReverseResponse(*keyword, *email, *company_name, *owner_name, apiKey, *page)
+				domainInfo, errorInfo := whois.GetReverseResponse(*keyword, *email, *company_name, *owner_name, *page)
 				if errorInfo != nil {
 					printError(errorInfo)
 					return
@@ -97,22 +119,23 @@ func main() {
 			}
 		}
 	} else if *dnsPtr {
+		dns.SetAPIKey(apiKey)
 		if *livePtr {
-			dnsInfo, errorInfo := dns.GetLiveResponse(*dnsType, *domain, apiKey)
+			dnsInfo, errorInfo := dns.GetLiveResponse(*dnsType, *domain)
 			if errorInfo != nil {
 				printError(errorInfo)
 				return
 			}
 			printInfo(dnsInfo)
 		} else if *historicalPtr {
-			historicalDnsInfo, errorInfo := dns.GetHistoricalResponse(*dnsType, *domain, *page, apiKey)
+			historicalDnsInfo, errorInfo := dns.GetHistoricalResponse(*dnsType, *domain, *page)
 			if errorInfo != nil {
 				printError(errorInfo)
 				return
 			}
 			printInfo(historicalDnsInfo)
 		} else if *reversePtr {
-			reverseDnsInfo, errorInfo := dns.GetReverseResponse(*dnsType, *value, *page, apiKey)
+			reverseDnsInfo, errorInfo := dns.GetReverseResponse(*dnsType, *value, *page)
 			if errorInfo != nil {
 				printError(errorInfo)
 				return
@@ -120,22 +143,23 @@ func main() {
 			printInfo(reverseDnsInfo)
 		}
 	} else if *domainAvailabilityPtr {
+		domainavailability.SetAPIKey(apiKey)
 		if *bulk {
-			bulkDomainavailabilityInfo, errorInfo := domainavailability.Bulk(strings.Split(*domains, ","), apiKey)
+			bulkDomainavailabilityInfo, errorInfo := domainavailability.Bulk(strings.Split(*domains, ","))
 			if errorInfo != nil {
 				printError(errorInfo)
 				return
 			}
 			printInfo(bulkDomainavailabilityInfo)
 		} else if *sug {
-			domainavailabilityInfo, errorInfo := domainavailability.CheckAndSuggest(*domain, apiKey, *sug, *count)
+			domainavailabilityInfo, errorInfo := domainavailability.CheckAndSuggest(*domain, *sug, *count)
 			if errorInfo != nil {
 				printError(errorInfo)
 				return
 			}
 			printInfo(domainavailabilityInfo)
 		} else {
-			bulkDomainavailabilityInfo, errorInfo := domainavailability.Check(*domain, apiKey)
+			bulkDomainavailabilityInfo, errorInfo := domainavailability.Check(*domain)
 			if errorInfo != nil {
 				printError(errorInfo)
 				return
@@ -143,8 +167,9 @@ func main() {
 			printInfo(bulkDomainavailabilityInfo)
 		}
 	} else if *sslPtr {
+		ssl.SetAPIKey(apiKey)
 		if *livePtr {
-			sslInfo, errorInfo := ssl.GetLiveResponse(*domain, apiKey, *chain, *raw)
+			sslInfo, errorInfo := ssl.GetLiveResponse(*domain, *chain, *raw)
 			if errorInfo != nil {
 				printError(errorInfo)
 				return
@@ -156,7 +181,7 @@ func main() {
 
 }
 
-func doParameterValidation(whois, dns, domainavailability, ssl, live, historical, reverse bool) (bool, string) {
+func doFlagsValidation(whois, dns, domainavailability, ssl, live, historical, reverse bool) (bool, string) {
 	apikey, present := os.LookupEnv("WHOISFREAKS_API_KEY")
 	if present != true {
 		log.Fatal("Are you sure you've set 'WHOISFREAKS_API_KEY' environmental variable? Because it's current value is: " + apikey)
@@ -188,7 +213,6 @@ func doParameterValidation(whois, dns, domainavailability, ssl, live, historical
 	}
 	return true, apikey
 }
-
 
 func printError(errorInfo interface{}) {
 	errorJSON, err := json.MarshalIndent(errorInfo, "", "    ")

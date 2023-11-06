@@ -1,5 +1,4 @@
 // This package contains Modals or types that will be useful for analyzing response from different available services.
-
 package modal
 
 // BulkDomainAvailability represents the response structure for bulk domain availability checks.

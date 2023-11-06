@@ -9,6 +9,5 @@ type ReverseMiniDomainInfo struct {
 	// CurrentPage represents the current page number of the reverse domain query results.
 	CurrentPage int `json:"current_page"`
 	// HistoricalData is a slice of MiniDomainInfo representing historical domain information in a minimal format.
-
 	HistoricalData []MiniDomainInfo `json:"whois_domains_historical"`
 }

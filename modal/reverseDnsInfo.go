@@ -9,6 +9,5 @@ type ReverseDnsInfo struct {
 	// TotalRecords represents the total number of reverse DNS records available.
 	TotalRecords int `json:"totalRecords,omitempty"`
 	// ReverseDns represents a slice of DNSInfo containing reverse DNS records.
-
 	ReverseDns []DNSInfo `json:"reverseDnsRecords,omitempty"`
 }
