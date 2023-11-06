@@ -9,11 +9,25 @@ import (
 	"github.com/WhoisFreaks/whoisfreaks/modal"
 )
 
+// apiKey is a global variable in ssl module that stores the API key used for authentication.
+var apiKey string
+
+// SetAPIKey sets the global API key to the specified value.
+// It allows you to configure the API key used for authentication in your application.
+//
+// Example usage:
+//   ssl.SetAPIKey("your_api_key_here")
+//
+// Parameters:
+//   - key: A string representing the API key to be set.
+func SetAPIKey(key string) {
+	apiKey = key
+}
+
 // GetLiveResponse retrieves live SSL information for a specific domain using the WhoisFreaks API.
 //
 // Parameters:
 //   - domain: The domain name for which live SSL information is requested (e.g., "example.com").
-//   - apiKey: The API key for authenticating the request with the WhoisFreaks API.
 //   - chain: A boolean flag indicating whether to include SSL certificate chain information.
 //   - raw: A boolean flag indicating whether to include raw SSL certificate information.
 //
@@ -22,13 +36,13 @@ import (
 //   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
 //
 // Example usage:
-//   sslInfo, err := ssl.GetLiveResponse("example.com", "your_api_key", true, false)
+//   sslInfo, err := ssl.GetLiveResponse("example.com", true, false)
 //   if err != nil {
 //       fmt.Println("Error:", err)
 //       return
 //   }
 //   fmt.Println("Live SSL Info:", sslInfo)
-func GetLiveResponse(domain string, apiKey string, chain bool, raw bool) (*modal.DomainSslInfo, *modal.Error) {
+func GetLiveResponse(domain string, chain bool, raw bool) (*modal.DomainSslInfo, *modal.Error) {
 
 	var liveSslURL = "https://api.whoisfreaks.com/v1.0/ssl/live?apiKey=" + apiKey + "&domainName=" + domain
 	var sslInfo modal.DomainSslInfo

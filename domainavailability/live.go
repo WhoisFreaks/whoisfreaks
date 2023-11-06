@@ -10,25 +10,39 @@ import (
 	"github.com/WhoisFreaks/whoisfreaks/modal"
 )
 
+// apiKey is a global variable in domainavailability module that stores the API key used for authentication.
+var apiKey string
+
+// SetAPIKey sets the global API key to the specified value.
+// It allows you to configure the API key used for authentication in your application.
+//
+// Example usage:
+//   domainavailability.SetAPIKey("your_api_key_here")
+//
+// Parameters:
+//   - key: A string representing the API key to be set.
+func SetAPIKey(key string) {
+	apiKey = key
+}
+
 // Check performs a domain availability check using the WhoisFreaks API.
 // It checks whether a specific domain name is available for registration.
 //
 // Parameters:
 //   - domain: The domain name to be checked for availability (e.g., "example.com").
-//   - apiKey: The API key for authenticating the request with the WhoisFreaks API.
 //
 // Returns:
 //   - *modal.DomainAvailability: A pointer to a DomainAvailability struct containing domain availability information.
 //   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
 //
 // Example usage:
-//   domainAvailability, err := domainavailability.Check("example.com", "your_api_key")
+//   domainAvailability, err := domainavailability.Check("example.com")
 //   if err != nil {
 //       fmt.Println("Error:", err)
 //       return
 //   }
 //   fmt.Println("Domain Availability Info:", domainAvailability)
-func Check(domain, apiKey string) (*modal.DomainAvailability, *modal.Error) {
+func Check(domain string) (*modal.DomainAvailability, *modal.Error) {
 
 	var domainAvailabilityURL = "https://api.whoisfreaks.com/v1.0/domain/availability?apiKey=" + apiKey + "&domain=" + domain
 	var domainAvailability modal.DomainAvailability
@@ -64,7 +78,6 @@ func Check(domain, apiKey string) (*modal.DomainAvailability, *modal.Error) {
 //
 // Parameters:
 //   - domain: The domain name to be checked for availability (e.g., "example.com").
-//   - apiKey: The API key for authenticating the request with the WhoisFreaks API.
 //   - sug: A boolean flag indicating whether to suggest similar domain names.
 //   - count: The number of suggested domain names to retrieve (valid only if sug is true).
 //
@@ -73,13 +86,13 @@ func Check(domain, apiKey string) (*modal.DomainAvailability, *modal.Error) {
 //   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
 //
 // Example usage:
-//   bulkDomainAvailability, err := domainavailability.CheckAndSuggest("example.com", "your_api_key", true, "5")
+//   bulkDomainAvailability, err := domainavailability.CheckAndSuggest("example.com", true, "5")
 //   if err != nil {
 //       fmt.Println("Error:", err)
 //       return
 //   }
 //   fmt.Println("Bulk Domain Availability Info:", bulkDomainAvailability)
-func CheckAndSuggest(domain string, apiKey string, sug bool, count string) (*modal.BulkDomainAvailability, *modal.Error) {
+func CheckAndSuggest(domain string, sug bool, count string) (*modal.BulkDomainAvailability, *modal.Error) {
 
 	var domainAvailabilityURL = "https://api.whoisfreaks.com/v1.0/domain/availability?apiKey=" + apiKey + "&domain=" + domain
 	var bulkDomainAvailability modal.BulkDomainAvailability
@@ -122,7 +135,6 @@ func CheckAndSuggest(domain string, apiKey string, sug bool, count string) (*mod
 //
 // Parameters:
 //   - domains: A slice of strings containing the domain names to be checked for availability.
-//   - apiKey: The API key for authenticating the request with the WhoisFreaks API.
 //
 // Returns:
 //   - *modal.BulkDomainAvailability: A pointer to a BulkDomainAvailability struct containing bulk domain availability information.
@@ -130,13 +142,13 @@ func CheckAndSuggest(domain string, apiKey string, sug bool, count string) (*mod
 //
 // Example usage:
 //   domains := []string{"example1.com", "example2.com", "example3.com"}
-//   bulkDomainAvailability, err := domainavailability.Bulk(domains, "your_api_key")
+//   bulkDomainAvailability, err := domainavailability.Bulk(domains)
 //   if err != nil {
 //       fmt.Println("Error:", err)
 //       return
 //   }
 //   fmt.Println("Bulk Domain Availability Info:", bulkDomainAvailability)
-func Bulk(domains []string, apiKey string) (*modal.BulkDomainAvailability, *modal.Error) {
+func Bulk(domains []string) (*modal.BulkDomainAvailability, *modal.Error) {
 
 	var domainAvailabilityURL = "https://api.whoisfreaks.com/v1.0/domain/availability?apiKey=" + apiKey
 	var bulkDomainAvailability modal.BulkDomainAvailability

@@ -8,26 +8,40 @@ import (
 	"github.com/WhoisFreaks/whoisfreaks/modal"
 )
 
+// apiKey is a global variable in dns module that stores the API key used for authentication.
+var apiKey string
+
+// SetAPIKey sets the global API key to the specified value.
+// It allows you to configure the API key used for authentication in your application.
+//
+// Example usage:
+//   dns.SetAPIKey("your_api_key_here")
+//
+// Parameters:
+//   - key: A string representing the API key to be set.
+func SetAPIKey(key string) {
+	apiKey = key
+}
+
 // GetLiveResponse performs a live DNS lookup using the WhoisFreaks API.
 // It retrieves real-time DNS information for a specific domain and DNS type.
 //
 // Parameters:
 //   - dnsType: The type of DNS record to look up (e.g., "A", "MX", "CNAME").
 //   - domain: The domain name for which live DNS information is requested.
-//   - apiKey: The API key for authenticating the request with the WhoisFreaks API.
 //
 // Returns:
 //   - *modal.DNSInfo: A pointer to a DNSInfo struct containing live DNS information.
 //   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
 //
 // Example usage:
-//   dnsInfo, err := dns.GetLiveResponse("a", "example.com", "your_api_key")
+//   dnsInfo, err := dns.GetLiveResponse("a", "example.com")
 //   if err != nil {
 //       fmt.Println("Error:", err)
 //       return
 //   }
 //   fmt.Println("Live DNS Info:", dnsInfo)
-func GetLiveResponse(dnsType, domain, apiKey string) (*modal.DNSInfo, *modal.Error) {
+func GetLiveResponse(dnsType, domain string) (*modal.DNSInfo, *modal.Error) {
 
 	var liveDNSURL = "https://api.whoisfreaks.com/v1.0/dns/live?apiKey=" + apiKey + "&type=" + dnsType + "&domainName=" + domain
 	var dnsInfo modal.DNSInfo

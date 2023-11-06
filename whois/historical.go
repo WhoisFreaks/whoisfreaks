@@ -13,20 +13,19 @@ import (
 //
 // Parameters:
 //   - domain: The domain name for which historical WHOIS information is requested (e.g., "example.com").
-//   - apiKey: The API key for authenticating the request with the WhoisFreaks API.
 //
 // Returns:
 //   - *modal.HistoricalDomainInfo: A pointer to a HistoricalDomainInfo struct containing historical domain information.
 //   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
 //
 // Example usage:
-//   historicalInfo, err := whois.GetHistoricalResponse("example.com", "your_api_key")
+//   historicalInfo, err := whois.GetHistoricalResponse("example.com")
 //   if err != nil {
 //       fmt.Println("Error:", err)
 //       return
 //   }
 //   fmt.Println("Historical Domain Info:", historicalInfo)
-func GetHistoricalResponse(domain, apiKey string) (*modal.HistoricalDomainInfo, *modal.Error) {
+func GetHistoricalResponse(domain string) (*modal.HistoricalDomainInfo, *modal.Error) {
 
 	var liveWhoisURL = "https://api.whoisfreaks.com/v1.0/whois?apiKey=" + apiKey + "&whois=historical&domainName=" + domain
 	var historcalDomainInfo modal.HistoricalDomainInfo
