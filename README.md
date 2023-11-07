@@ -572,8 +572,8 @@ This package is for performing any type of SSL lookup.
 
 #### Index
 
-[SSL Authentication Setup](#ssl-authentication-setup)
-[SSL Live Lookup](#ssl-live-lookup)
+[SSL Authentication Setup](#ssl-authentication-setup)  
+[SSL Live Lookup](#ssl-live-lookup)  
 
 #### Functions
 
