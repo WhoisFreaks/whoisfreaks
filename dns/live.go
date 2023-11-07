@@ -14,11 +14,12 @@ var apiKey string
 // SetAPIKey sets the global API key to the specified value.
 // It allows you to configure the API key used for authentication in your application.
 //
+// Parameters:
+//   - key: A string representing the API key to be set.
+//
 // Example usage:
 //   dns.SetAPIKey("your_api_key_here")
 //
-// Parameters:
-//   - key: A string representing the API key to be set.
 func SetAPIKey(key string) {
 	apiKey = key
 }
@@ -27,7 +28,7 @@ func SetAPIKey(key string) {
 // It retrieves real-time DNS information for a specific domain and DNS type.
 //
 // Parameters:
-//   - dnsType: The type of DNS record to look up (e.g., "A", "MX", "CNAME").
+//   - dnsType: The type of DNS record to look up (e.g., "A", "MX", "CNAME"). If you want all records use "all" and if you want multiple records use this "a,aaaa".
 //   - domain: The domain name for which live DNS information is requested.
 //
 // Returns:
@@ -35,6 +36,7 @@ func SetAPIKey(key string) {
 //   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
 //
 // Example usage:
+//	 dns.SetAPIKey("your_api_key_here")
 //   dnsInfo, err := dns.GetLiveResponse("a", "example.com")
 //   if err != nil {
 //       fmt.Println("Error:", err)

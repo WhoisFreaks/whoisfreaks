@@ -19,6 +19,7 @@ import (
 //   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
 //
 // Example usage:
+//	 whois.SetAPIKey("your_api_key_here")
 //   historicalInfo, err := whois.GetHistoricalResponse("example.com")
 //   if err != nil {
 //       fmt.Println("Error:", err)

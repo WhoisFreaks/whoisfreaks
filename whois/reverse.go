@@ -22,6 +22,7 @@ import (
 //   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
 //
 // Example usage:
+//	 whois.SetAPIKey("your_api_key_here")
 //   reverseMiniDomainInfo, err := whois.GetReverseMiniResponse("example", "email@example.com", "", "", "1")
 //   if err != nil {
 //       fmt.Println("Error:", err)
@@ -86,6 +87,7 @@ func GetReverseMiniResponse(keyword, email, company, owner, page string) (*modal
 //   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
 //
 // Example usage:
+//	 whois.SetAPIKey("your_api_key_here")
 //   reverseDomainInfo, err := whois.GetReverseResponse("example", "email@example.com", "", "", "1")
 //   if err != nil {
 //       fmt.Println("Error:", err)
