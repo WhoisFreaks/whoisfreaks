@@ -174,12 +174,12 @@ This package is for performing any type of WHOIS lookup, such as live, historica
 
 #### Index
 
-[WHOIS Authentication Setup](#whois-authentication-setup)
-[WHOIS Bulk Live Lookup](#whois-bulk-live-lookup)
-[WHOIS Historical Lookup](#whois-historical-lookup)
-[WHOIS Live Lookup](#whois-live-lookup)
-[WHOIS Reverse Lookup](#whois-reverse-lookup)
-[WHOIS Mini Reverse Lookup](#whois-mini-reverse-lookup)
+[WHOIS Authentication Setup](#whois-authentication-setup)  
+[WHOIS Bulk Live Lookup](#whois-bulk-live-lookup)  
+[WHOIS Historical Lookup](#whois-historical-lookup)  
+[WHOIS Live Lookup](#whois-live-lookup)  
+[WHOIS Reverse Lookup](#whois-reverse-lookup)  
+[WHOIS Mini Reverse Lookup](#whois-mini-reverse-lookup)  
 
 #### Functions
 
