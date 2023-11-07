@@ -220,6 +220,7 @@ Returns:
 Example usage: 
 
 ```
+whois.SetAPIKey("your_api_key_here")
 domains := []string{"example1.com", "example2.com", "example3.com"}
 bulkDomainInfo, err := GetBulkLiveResponse(domains)
 if err != nil {
@@ -248,6 +249,7 @@ Returns:
 Example usage:
 
 ```
+whois.SetAPIKey("your_api_key_here")
 historicalInfo, err := whois.GetHistoricalResponse("example.com")
 if err != nil {
     fmt.Println("Error:", err)
@@ -275,6 +277,7 @@ Returns:
 
 Example usage:
 ```
+whois.SetAPIKey("your_api_key_here")
 domainInfo, err := whois.GetLiveResponse("example.com")
 if err != nil {
     fmt.Println("Error:", err)
@@ -308,6 +311,7 @@ Returns:
 
 Example usage:
 ```
+whois.SetAPIKey("your_api_key_here")
 reverseDomainInfo, err := whois.GetReverseResponse("example", "email@example.com", "", "", "1")
 if err != nil {
     fmt.Println("Error:", err)
@@ -344,6 +348,7 @@ Returns:
 
 Example usage:
 ```
+whois.SetAPIKey("your_api_key_here")
 reverseMiniDomainInfo, err := whois.GetReverseMiniResponse("example", "email@example.com", "", "", "1")
 if err != nil {
     fmt.Println("Error:", err)
@@ -404,6 +409,7 @@ Returns:
 Example usage: 
 
 ```
+domainavailability.SetAPIKey("your_api_key_here")
 domains := []string{"example1.com", "example2.com", "example3.com"}
 bulkDomainAvailability, err := domainavailability.Bulk(domains)
 if err != nil {
@@ -433,6 +439,7 @@ Returns:
 Example usage:
 
 ```
+domainavailability.SetAPIKey("your_api_key_here")
 domainAvailability, err := domainavailability.Check("example.com")
 if err != nil {
     fmt.Println("Error:", err)
@@ -462,6 +469,7 @@ Returns:
 Example usage:
 
 ```
+domainavailability.SetAPIKey("your_api_key_here")
 bulkDomainAvailability, err := domainavailability.CheckAndSuggest("example.com", true, "5")
 if err != nil {
     fmt.Println("Error:", err)
@@ -469,10 +477,6 @@ if err != nil {
 }
 fmt.Println("Bulk Domain Availability Info:", bulkDomainAvailability)
 ```
-
-##### Types
-
-This section is empty.
 
 
 ### DNS Lookup
@@ -520,6 +524,7 @@ Returns:
 Example Usage:
 
 ```
+dns.SetAPIKey("your_api_key_here")
 historicalDnsInfo, err := dns.GetHistoricalResponse("A", "example.com", "1")
 if err != nil {
     fmt.Println("Error:", err)
@@ -544,6 +549,7 @@ Returns:
 
 Example Usage:
 ```
+dns.SetAPIKey("your_api_key_here")
 dnsInfo, err := dns.GetLiveResponse("a", "example.com")
 if err != nil {
     fmt.Println("Error:", err)
@@ -556,9 +562,21 @@ fmt.Println("Live DNS Info:", dnsInfo)
 ```
 func GetReverseResponse(dnsType, value, page string) (*modal.ReverseDnsInfo, *modal.Error)
 ```
+``GetReverseResponse`` performs a reverse DNS lookup using the WhoisFreaks API. 
 
+Parameters:
+- dnsType: The type of DNS record to look up (e.g., "a"). Multiple records are not supported.
+- value: The IP address or value for which reverse DNS information is requested.
+- page: The optional page number for paginated results. Leave empty for the first page.
+
+Returns:
+- *modal.ReverseDnsInfo: A pointer to a ReverseDnsInfo struct containing reverse DNS information.
+- *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
+
+Example usages:
 ```
-reverseDnsInfo, err := dns.GetReverseResponse("mx", "mx.zoho.com", "1")
+dns.SetAPIKey("your_api_key_here")
+reverseDnsInfo, err := dns.GetReverseResponse("a", "8.8.8.8", "1")
 if err != nil {
     fmt.Println("Error:", err)
     return
@@ -566,6 +584,15 @@ if err != nil {
 fmt.Println("Reverse DNS Info:", reverseDnsInfo)
 ```
 
+```
+dns.SetAPIKey("your_api_key_here")
+reverseDnsInfo, err := dns.GetReverseResponse("mx", "mx.zoho.com", "1")
+if err != nil {
+    fmt.Println("Error:", err)
+    return
+}
+fmt.Println("Reverse DNS Info:", reverseDnsInfo)
+```
 
 ### SSL Lookup
 This package is for performing any type of SSL lookup. 
@@ -617,6 +644,7 @@ Returns:
 Example usage:
 
 ```
+ssl.SetAPIKey("your_api_key_here")
 sslInfo, err := ssl.GetLiveResponse("example.com", true, false)
 if err != nil {
     fmt.Println("Error:", err)
