@@ -16,11 +16,11 @@ var apiKey string
 // SetAPIKey sets the global API key to the specified value.
 // It allows you to configure the API key used for authentication in your application.
 //
-// Example usage:
-//   domainavailability.SetAPIKey("your_api_key_here")
-//
 // Parameters:
 //   - key: A string representing the API key to be set.
+//
+// Example usage:
+//   domainavailability.SetAPIKey("your_api_key_here")
 func SetAPIKey(key string) {
 	apiKey = key
 }
@@ -36,6 +36,7 @@ func SetAPIKey(key string) {
 //   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
 //
 // Example usage:
+//	 domainavailability.SetAPIKey("your_api_key_here")
 //   domainAvailability, err := domainavailability.Check("example.com")
 //   if err != nil {
 //       fmt.Println("Error:", err)
@@ -86,6 +87,7 @@ func Check(domain string) (*modal.DomainAvailability, *modal.Error) {
 //   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
 //
 // Example usage:
+//	 domainavailability.SetAPIKey("your_api_key_here")
 //   bulkDomainAvailability, err := domainavailability.CheckAndSuggest("example.com", true, "5")
 //   if err != nil {
 //       fmt.Println("Error:", err)
@@ -141,6 +143,7 @@ func CheckAndSuggest(domain string, sug bool, count string) (*modal.BulkDomainAv
 //   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
 //
 // Example usage:
+//	 domainavailability.SetAPIKey("your_api_key_here")
 //   domains := []string{"example1.com", "example2.com", "example3.com"}
 //   bulkDomainAvailability, err := domainavailability.Bulk(domains)
 //   if err != nil {

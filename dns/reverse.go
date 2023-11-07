@@ -12,7 +12,7 @@ import (
 // It retrieves DNS information for a specific IP address or value.
 //
 // Parameters:
-//   - dnsType: The type of DNS record to look up (e.g., "a").
+//   - dnsType: The type of DNS record to look up (e.g., "a"). Multiple records are not supported.
 //   - value: The IP address or value for which reverse DNS information is requested.
 //   - page: The optional page number for paginated results. Leave empty for the first page.
 //
@@ -20,14 +20,17 @@ import (
 //   - *modal.ReverseDnsInfo: A pointer to a ReverseDnsInfo struct containing reverse DNS information.
 //   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
 //
-// Example usage:
+// Example1:
+//	 dns.SetAPIKey("your_api_key_here")
 //   reverseDnsInfo, err := dns.GetReverseResponse("a", "8.8.8.8", "1")
 //   if err != nil {
 //       fmt.Println("Error:", err)
 //       return
 //   }
 //   fmt.Println("Reverse DNS Info:", reverseDnsInfo)
-
+//
+// Example2:
+//	 dns.SetAPIKey("your_api_key_here")
 //   reverseDnsInfo, err := dns.GetReverseResponse("mx", "mx.zoho.com", "1")
 //   if err != nil {
 //       fmt.Println("Error:", err)

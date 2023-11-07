@@ -13,7 +13,7 @@ import (
 // It retrieves historical DNS information for a specific domain and DNS type.
 //
 // Parameters:
-//   - dnsType: The type of DNS record to look up (e.g., "A", "MX", "CNAME").
+//   - dnsType: The type of DNS record to look up (e.g., "A", "MX", "CNAME"). If you want all records use "all" and if you want multiple records use this "a,aaaa".
 //   - domain: The domain name for which historical DNS information is requested.
 //   - page: The optional page number for paginated results. Leave empty for the first page.
 //
@@ -22,6 +22,7 @@ import (
 //   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
 //
 // Example usage:
+//	 dns.SetAPIKey("your_api_key_here")
 //   historicalDnsInfo, err := dns.GetHistoricalResponse("A", "example.com", "1")
 //   if err != nil {
 //       fmt.Println("Error:", err)

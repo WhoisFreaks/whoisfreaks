@@ -15,11 +15,11 @@ var apiKey string
 // SetAPIKey sets the global API key to the specified value.
 // It allows you to configure the API key used for authentication in your application.
 //
-// Example usage:
-//   ssl.SetAPIKey("your_api_key_here")
-//
 // Parameters:
 //   - key: A string representing the API key to be set.
+//
+// Example usage:
+//   ssl.SetAPIKey("your_api_key_here")
 func SetAPIKey(key string) {
 	apiKey = key
 }
@@ -36,6 +36,7 @@ func SetAPIKey(key string) {
 //   - *modal.Error: A pointer to an Error struct if there is an API error, or nil if the request is successful.
 //
 // Example usage:
+//	 ssl.SetAPIKey("your_api_key_here")
 //   sslInfo, err := ssl.GetLiveResponse("example.com", true, false)
 //   if err != nil {
 //       fmt.Println("Error:", err)
